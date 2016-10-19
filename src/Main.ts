@@ -163,30 +163,30 @@ class Main extends egret.DisplayObjectContainer {
 }
 
 class Player extends egret.DisplayObjectContainer{
-    public pic:egret.Bitmap;
+    public FirstPic:egret.Bitmap;
     private StaMac:StaMachine = new StaMachine;
     public MoveSpeed:number = 30;
     public Model:number = 0;
-    public IdleAni:Array<egret.Texture> = new Array<egret.Texture>();
+    public IdleArr:Array<egret.Texture> = new Array<egret.Texture>();
     public MoveAni:Array<egret.Texture> = new Array<egret.Texture>();
     public constructor(){
         super();
-        this.pic = this.createBitmapByName("j1_png");
-        this.addChild(this.pic);
-        this.LoadAni();
-        this.anchorOffsetX = this.pic.width/2;
-        this.anchorOffsetY = this.pic.height/2;
+        this.FirstPic = this.createBitmapByName("j1_png");
+        this.addChild(this.FirstPic);
+        this.LoadArr();
+        this.anchorOffsetX = this.FirstPic.width/2;
+        this.anchorOffsetY = this.FirstPic.height/2;
     }
 
-    private LoadAni(){
+    private LoadArr(){
         var texture:egret.Texture = RES.getRes("j1_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("j2_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("j3_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("j4_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("t1_png");
         this.MoveAni.push(texture);
         texture = RES.getRes("t2_png");
@@ -197,16 +197,16 @@ class Player extends egret.DisplayObjectContainer{
         this.MoveAni.push(texture);
     }
 
-    public PlayAni(Ani:Array<egret.Texture>){
+    public PlayArr(Arr:Array<egret.Texture>){
         var count = 0;
-        var Bit = this.pic;
+        var Bit = this.FirstPic;
         var M = this.Model;
         var timer:egret.Timer = new egret.Timer(125,0);
         timer.addEventListener(egret.TimerEvent.TIMER,Play,this);
         timer.start();
         function Play(){
-            Bit.texture = Ani[count];
-            if(count<Ani.length-1){
+            Bit.texture = Arr[count];
+            if(count<Arr.length-1){
                 count++;
             }
             else{
@@ -287,7 +287,7 @@ class MoveCur implements Sta{
             }
         },this);
         this.timer.start();
-        this.player.PlayAni(this.player.MoveAni);
+        this.player.PlayArr(this.player.MoveAni);
     }
     exit(){
         //this.LeastTime = -10;
@@ -302,7 +302,7 @@ class IdleSta implements Sta{
     }
     Load(){
         this.player.Model = 0;
-        this.player.PlayAni(this.player.IdleAni);
+        this.player.PlayArr(this.player.IdleArr);
     }
     exit(){
 

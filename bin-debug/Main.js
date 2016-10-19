@@ -142,24 +142,24 @@ var Player = (function (_super) {
         this.StaMac = new StaMachine;
         this.MoveSpeed = 30;
         this.Model = 0;
-        this.IdleAni = new Array();
+        this.IdleArr = new Array();
         this.MoveAni = new Array();
         this.pic = this.createBitmapByName("j1_png");
         this.addChild(this.pic);
-        this.LoadAni();
+        this.LoadArr();
         this.anchorOffsetX = this.pic.width / 2;
         this.anchorOffsetY = this.pic.height / 2;
     }
     var d = __define,c=Player,p=c.prototype;
-    p.LoadAni = function () {
+    p.LoadArr = function () {
         var texture = RES.getRes("j1_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("j2_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("j3_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("j4_png");
-        this.IdleAni.push(texture);
+        this.IdleArr.push(texture);
         texture = RES.getRes("t1_png");
         this.MoveAni.push(texture);
         texture = RES.getRes("t2_png");
@@ -206,6 +206,20 @@ var Player = (function (_super) {
     return Player;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Player,'Player');
+var StaMachine = (function () {
+    function StaMachine() {
+    }
+    var d = __define,c=StaMachine,p=c.prototype;
+    p.Reload = function (s) {
+        if (this.StaCur) {
+            this.StaCur.exit();
+        }
+        this.StaCur = s;
+        this.StaCur.Load();
+    };
+    return StaMachine;
+}());
+egret.registerClass(StaMachine,'StaMachine');
 var MoveCur = (function () {
     function MoveCur(x, y, player) {
         this.Ty = y;
@@ -253,25 +267,11 @@ var IdleSta = (function () {
     var d = __define,c=IdleSta,p=c.prototype;
     p.Load = function () {
         this.player.Model = 0;
-        this.player.PlayAni(this.player.IdleAni);
+        this.player.PlayAni(this.player.IdleArr);
     };
     p.exit = function () {
     };
     return IdleSta;
 }());
 egret.registerClass(IdleSta,'IdleSta',["Sta"]);
-var StaMachine = (function () {
-    function StaMachine() {
-    }
-    var d = __define,c=StaMachine,p=c.prototype;
-    p.Reload = function (s) {
-        if (this.StaCur) {
-            this.StaCur.exit();
-        }
-        this.StaCur = s;
-        this.StaCur.Load();
-    };
-    return StaMachine;
-}());
-egret.registerClass(StaMachine,'StaMachine');
 //# sourceMappingURL=Main.js.map
