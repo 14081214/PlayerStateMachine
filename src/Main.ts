@@ -241,6 +241,17 @@ interface Sta{
     exit();
 }
 
+class StaMachine{
+    private StaCur:Sta;
+    public Reload(s:Sta):void{
+        if(this.StaCur){
+            this.StaCur.exit();
+        }
+        this.StaCur = s;
+        this.StaCur.Load();
+    }
+}
+
 class MoveCur implements Sta{
     private Tx:number;
     private Ty:number;
@@ -262,8 +273,8 @@ class MoveCur implements Sta{
         else{
             this.player.scaleX = 1;
         }
-        var zz = Math.pow(xx*xx+yy*yy,0.5);
-        var time:number = zz/this.player.MoveSpeed;
+        var distance = Math.pow(xx*xx+yy*yy,0.5); //距离
+        var time:number = distance/this.player.MoveSpeed;
         this.timer = new egret.Timer(50,time);
         this.LeastTime = time;
         this.timer.addEventListener(egret.TimerEvent.TIMER,()=>{
@@ -272,16 +283,14 @@ class MoveCur implements Sta{
             this.LeastTime--;
             if(this.LeastTime<1){
                 this.timer.stop();
-                if(this.LeastTime>-10){
-                    this.player.Idle();
-                }
+                this.player.Idle();
             }
         },this);
         this.timer.start();
         this.player.PlayAni(this.player.MoveAni);
     }
     exit(){
-        this.LeastTime = -10;
+        //this.LeastTime = -10;
     }
 }
 
@@ -300,13 +309,3 @@ class IdleSta implements Sta{
     }
 }
 
-class StaMachine{
-    private StaCur:Sta;
-    public Reload(s:Sta):void{
-        if(this.StaCur){
-            this.StaCur.exit();
-        }
-        this.StaCur = s;
-        this.StaCur.Load();
-    }
-}

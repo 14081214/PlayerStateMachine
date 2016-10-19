@@ -224,8 +224,8 @@ var MoveCur = (function () {
         else {
             this.player.scaleX = 1;
         }
-        var zz = Math.pow(xx * xx + yy * yy, 0.5);
-        var time = zz / this.player.MoveSpeed;
+        var distance = Math.pow(xx * xx + yy * yy, 0.5); //距离
+        var time = distance / this.player.MoveSpeed;
         this.timer = new egret.Timer(50, time);
         this.LeastTime = time;
         this.timer.addEventListener(egret.TimerEvent.TIMER, function () {
@@ -234,16 +234,14 @@ var MoveCur = (function () {
             _this.LeastTime--;
             if (_this.LeastTime < 1) {
                 _this.timer.stop();
-                if (_this.LeastTime > -10) {
-                    _this.player.Idle();
-                }
+                _this.player.Idle();
             }
         }, this);
         this.timer.start();
         this.player.PlayAni(this.player.MoveAni);
     };
     p.exit = function () {
-        this.LeastTime = -10;
+        //this.LeastTime = -10;
     };
     return MoveCur;
 }());
